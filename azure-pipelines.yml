@@ -57,11 +57,12 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy dacpac files'
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/AdventureWorks2016/bin/$(buildConfiguration)'
+    SourceFolder: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)'
     Contents: |
       **/*.dacpac
       **/*.publish.xml
     TargetFolder: '$(Build.ArtifactStagingDirectory)/database'
+
 - task: CopyFiles@2
   displayName: 'Copy diff script'
   inputs:
@@ -69,6 +70,7 @@ steps:
     Contents: |
       **/*.sql
     TargetFolder: '$(Build.ArtifactStagingDirectory)/database'
+    
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)/database'
