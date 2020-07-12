@@ -34,7 +34,7 @@ steps:
     azureSubscription: 'Assaf''s Microsoft Azure Internal Consumption(d98ee679-4c4d-4a03-9181-ea7a16d0b5a8)'
     AuthenticationType: 'server'
     ServerName: 'devopsdemos.database.windows.net'
-    DatabaseName: 'AdventureWorks2016'
+    DatabaseName: 'AW2016demo'
     SqlUsername: '$(SQL_USER)'
     SqlPassword: '$(SQL_PASSWORD)'
     deployType: 'DacpacTask'
