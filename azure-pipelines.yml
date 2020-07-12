@@ -22,12 +22,34 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: VSBuild@1
+  displayName: Compile DACPAC for AdventureWorks database project
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
+- task: SqlAzureDacpacDeployment@1
+  displayName: 'Create a DIFF script that compares the dacpac with the target database'
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    azureSubscription: 'Assaf''s Microsoft Azure Internal Consumption(d98ee679-4c4d-4a03-9181-ea7a16d0b5a8)'
+    AuthenticationType: 'server'
+    ServerName: 'awdemo4teck.database.windows.net'
+    DatabaseName: 'AdventureWorks2016'
+    SqlUsername: '$(SQL_USER)'
+    SqlPassword: '$(SQL_PASSWORD)'
+    deployType: 'DacpacTask'
+    DeploymentAction: 'Script'
+    DacpacFile: '$(Build.SourcesDirectory)/AdventureWorks2016/bin/$(buildConfiguration)/AdventureWorks2016.dacpac'
+    PublishProfile: '$(Build.SourcesDirectory)/AdventureWorks2016/bin/$(buildConfiguration)/AdventureWorks2016.publish.xml'
+    IpDetectionMethod: 'AutoDetect'
+
+- task: PowerShell@2
+  displayName: 'Display the schema migration script(s) for diagnostics'
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host "Migration Scripts"
+      Get-ChildItem $(Build.SourcesDirectory)/GeneratedOutputFiles/*.sql | Foreach-Object { 
+        Write-Host "*** File: $($_.FullName) ***"
+        Get-Content -Path $_
+      }
