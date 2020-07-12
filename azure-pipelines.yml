@@ -33,14 +33,14 @@ steps:
   inputs:
     azureSubscription: 'Assaf''s Microsoft Azure Internal Consumption(d98ee679-4c4d-4a03-9181-ea7a16d0b5a8)'
     AuthenticationType: 'server'
-    ServerName: 'awdemo4teck.database.windows.net'
+    ServerName: 'devopsdemos.database.windows.net'
     DatabaseName: 'AdventureWorks2016'
     SqlUsername: '$(SQL_USER)'
     SqlPassword: '$(SQL_PASSWORD)'
     deployType: 'DacpacTask'
     DeploymentAction: 'Script'
-    DacpacFile: '$(Build.SourcesDirectory)/AdventureWorks2016/bin/$(buildConfiguration)/AdventureWorks2016.dacpac'
-    PublishProfile: '$(Build.SourcesDirectory)/AdventureWorks2016/bin/$(buildConfiguration)/AdventureWorks2016.publish.xml'
+    DacpacFile: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dacpac'
+    PublishProfile: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.publish.xml'
     IpDetectionMethod: 'AutoDetect'
 
 - task: PowerShell@2
