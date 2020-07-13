@@ -15,21 +15,13 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
-
 - task: VSBuild@1
-  displayName: Compile DACPAC for AdventureWorks database project
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 - task: SqlAzureDacpacDeployment@1
-  displayName: 'Create a DIFF script that compares the dacpac with the target database'
   inputs:
     azureSubscription: 'Assaf''s Microsoft Azure Internal Consumption(d98ee679-4c4d-4a03-9181-ea7a16d0b5a8)'
     AuthenticationType: 'server'
@@ -40,7 +32,7 @@ steps:
     deployType: 'DacpacTask'
     DeploymentAction: 'Script'
     DacpacFile: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dacpac'
-    PublishProfile: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.publish.xml'
+    PublishProfile: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dev.publish.xml'
     IpDetectionMethod: 'AutoDetect'
 
 - task: PowerShell@2
@@ -70,7 +62,7 @@ steps:
     Contents: |
       **/*.sql
     TargetFolder: '$(Build.ArtifactStagingDirectory)/database'
-    
+
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)/database'
