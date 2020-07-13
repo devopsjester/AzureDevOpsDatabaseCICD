@@ -104,4 +104,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="AdventureWorks.refactorlog" />
+  </ItemGroup>
 </Project>
