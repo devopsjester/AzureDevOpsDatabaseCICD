@@ -100,7 +100,9 @@
     <Build Include="SalesLT\Sequences\SalesOrderNumber.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AdventureWorks.dev.publish.xml" />
+    <None Include="AdventureWorks.dev.publish.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="AdventureWorks.refactorlog" />
