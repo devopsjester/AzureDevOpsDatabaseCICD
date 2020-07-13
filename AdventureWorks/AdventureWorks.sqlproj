@@ -99,9 +99,4 @@
     <Build Include="Security\SalesLT.sql" />
     <Build Include="SalesLT\Sequences\SalesOrderNumber.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="AdventureWorks.publish.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>
