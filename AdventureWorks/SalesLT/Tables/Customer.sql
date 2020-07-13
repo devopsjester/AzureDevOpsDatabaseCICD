@@ -5,7 +5,7 @@
     [FirstName]    [dbo].[Name]      NOT NULL,
     [MiddleName]   [dbo].[Name]      NULL,
     [LastName]     [dbo].[Name]      NOT NULL,
-    [Suffix]       NVARCHAR (10)     NULL,
+    [Suffix]       NVARCHAR (150)     NULL,
     [CompanyName]  NVARCHAR (128)    NULL,
     [SalesPerson]  NVARCHAR (256)    NULL,
     [EmailAddress] NVARCHAR (50)     NULL,
