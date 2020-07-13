@@ -99,4 +99,7 @@
     <Build Include="Security\SalesLT.sql" />
     <Build Include="SalesLT\Sequences\SalesOrderNumber.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="AdventureWorks.dev.publish.xml" />
+  </ItemGroup>
 </Project>
