@@ -6,7 +6,7 @@
     [StandardCost]           MONEY            NOT NULL,
     [ListPrice]              MONEY            NOT NULL,
     [Size]                   NVARCHAR (5)     NULL,
-    [Weight]                 DECIMAL (8, 2)   NULL,
+    [Weight]                 DECIMAL (8, 3)   NULL,
     [ProductCategoryID]      INT              NULL,
     [ProductModelID]         INT              NULL,
     [SellStartDate]          DATETIME         NOT NULL,
