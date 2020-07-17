@@ -87,6 +87,9 @@ stages:
       runOnce:
         deploy:
           steps:
+          - download: current
+            artifact: database
+            patterns: '**/AdventureWorks.*'
           - task: SqlAzureDacpacDeployment@1
             inputs:
               azureSubscription: 'Assaf''s Microsoft Azure Internal Consumption(d98ee679-4c4d-4a03-9181-ea7a16d0b5a8)'
