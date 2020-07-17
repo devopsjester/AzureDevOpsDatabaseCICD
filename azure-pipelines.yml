@@ -3,8 +3,8 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
-trigger:
-- master
+trigger: none
+#- master
 
 resources:
   repositories:
@@ -29,6 +29,10 @@ stages:
     steps:
     - checkout: self
     - checkout: tbf
+    - task: NuGetToolInstaller@1
+    - task: NuGetCommand@2
+      inputs:
+        restoreSolution: '$(solution)'
     - task: VSBuild@1
       displayName: Compile the dacpac with the publish-profile
       inputs:
