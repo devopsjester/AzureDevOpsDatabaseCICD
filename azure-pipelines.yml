@@ -24,8 +24,8 @@ stages:
   - job: BuildSqlSolution
     displayName: Build the database schema's dacpac
     pool: 
-    #  vmImage: 'windows-latest'
-      name: Personal
+      vmImage: 'windows-latest'
+    #  name: Personal
     steps:
     - checkout: self
     - checkout: tbf
