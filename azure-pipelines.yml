@@ -66,7 +66,7 @@ stages:
     #    resultsFile: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/Test-Pester.XML'
     #    additionalModulePath: '$(Build.SourcesDirectory)/TrustButVerify/Modules/SqlScriptParser'
     #    run32Bit: False
-    - task: Pester@10
+    - task: Pester@8
       inputs:
         scriptFolder: '$(Build.SourcesDirectory)/TrustButVerify'
         resultsFile: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/Test-Pester.XML'
