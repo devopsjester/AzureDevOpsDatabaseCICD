@@ -53,6 +53,7 @@ steps:
     Contents: |
       **/*.dacpac
       **/*.publish.xml
+      **/*.sql
     TargetFolder: '$(Build.ArtifactStagingDirectory)/database'
 
 - task: CopyFiles@2
