@@ -10,63 +10,68 @@ pool:
 #  vmImage: 'windows-latest'
   name: Personal
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+stages:
+- stage: Builds
+  displayName: Build the artifacts to be deployed
+  variables:
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
+  jobs:
+  - job: BuildSqlSolution
+    displayName: Build the database schema's dacpac
+    pool: 
+      vmImage: 'windows-latest'
+    steps:
+    - task: VSBuild@1
+      inputs:
+        solution: '$(solution)'
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+    - task: SqlAzureDacpacDeployment@1
+      inputs:
+        azureSubscription: 'Assaf''s Microsoft Azure Internal Consumption(d98ee679-4c4d-4a03-9181-ea7a16d0b5a8)'
+        AuthenticationType: 'server'
+        ServerName: 'devopsdemos.database.windows.net'
+        DatabaseName: 'AW2016demo'
+        SqlUsername: '$(SQL_USER)'
+        SqlPassword: '$(SQL_PASSWORD)'
+        deployType: 'DacpacTask'
+        DeploymentAction: 'Script'
+        DacpacFile: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dacpac'
+        PublishProfile: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dev.publish.xml'
+        IpDetectionMethod: 'AutoDetect'
+    - task: PowerShell@2
+      displayName: 'Display the schema migration script(s) for diagnostics'
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "Migration Scripts"
+          Get-ChildItem $(Build.SourcesDirectory)/GeneratedOutputFiles/*.sql | Foreach-Object { 
+            Write-Host "*** File: $($_.FullName) ***"
+            Get-Content -Path $_
+          }
 
-steps:
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    - task: CopyFiles@2
+      displayName: 'Copy dacpac files'
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)'
+        Contents: |
+          **/*.dacpac
+          **/*.publish.xml
+          **/*.sql
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/database'
 
-- task: SqlAzureDacpacDeployment@1
-  inputs:
-    azureSubscription: 'Assaf''s Microsoft Azure Internal Consumption(d98ee679-4c4d-4a03-9181-ea7a16d0b5a8)'
-    AuthenticationType: 'server'
-    ServerName: 'devopsdemos.database.windows.net'
-    DatabaseName: 'AW2016demo'
-    SqlUsername: '$(SQL_USER)'
-    SqlPassword: '$(SQL_PASSWORD)'
-    deployType: 'DacpacTask'
-    DeploymentAction: 'Script'
-    DacpacFile: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dacpac'
-    PublishProfile: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dev.publish.xml'
-    IpDetectionMethod: 'AutoDetect'
+    - task: CopyFiles@2
+      displayName: 'Copy diff script'
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)/GeneratedOutputFiles'
+        Contents: |
+          **/*.sql
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/database'
 
-- task: PowerShell@2
-  displayName: 'Display the schema migration script(s) for diagnostics'
-  inputs:
-    targetType: 'inline'
-    script: |
-      Write-Host "Migration Scripts"
-      Get-ChildItem $(Build.SourcesDirectory)/GeneratedOutputFiles/*.sql | Foreach-Object { 
-        Write-Host "*** File: $($_.FullName) ***"
-        Get-Content -Path $_
-      }
-
-- task: CopyFiles@2
-  displayName: 'Copy dacpac files'
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)'
-    Contents: |
-      **/*.dacpac
-      **/*.publish.xml
-      **/*.sql
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/database'
-
-- task: CopyFiles@2
-  displayName: 'Copy diff script'
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/GeneratedOutputFiles'
-    Contents: |
-      **/*.sql
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/database'
-
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)/database'
-    artifact: 'database'
-    publishLocation: 'pipeline'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/database'
+        artifact: 'database'
+        publishLocation: 'pipeline'
