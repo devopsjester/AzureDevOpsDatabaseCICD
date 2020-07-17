@@ -97,7 +97,7 @@ stages:
               SqlPassword: '$(SQL_PASSWORD)'
               deployType: 'DacpacTask'
               DeploymentAction: 'Publish'
-              DacpacFile: '$(Pipeline.Workspace)/database/AdventureWork.dacpac'
+              DacpacFile: '$(Pipeline.Workspace)/database/AdventureWorks.dacpac'
               PublishProfile: '$(Pipeline.Workspace)/database/AdventureWorks.dev.publish.xml'
               IpDetectionMethod: 'AutoDetect'
           
