@@ -6,6 +6,13 @@
 trigger:
 - master
 
+resources:
+  repositories:
+    - repository: tbf
+      type: github
+      name: devopsjester/TrustButVerify
+      endpoint: github.com_devopsjester
+
 stages:
 - stage: Builds
   displayName: Build the artifacts to be deployed
@@ -17,8 +24,11 @@ stages:
   - job: BuildSqlSolution
     displayName: Build the database schema's dacpac
     pool: 
-      vmImage: 'windows-latest'
+    #  vmImage: 'windows-latest'
+      name: Personal
     steps:
+    - checkout: self
+    - checkout: tbf
     - task: VSBuild@1
       displayName: Compile the dacpac with the publish-profile
       inputs:
