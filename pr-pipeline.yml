@@ -73,34 +73,3 @@ stages:
         targetPath: '$(Build.ArtifactStagingDirectory)/database'
         artifact: 'database'
         publishLocation: 'pipeline'
-
-- stage: Deployments
-  displayName: Deploy artifacts to Azure
-  jobs:
-  - deployment: DeployDatabase
-    displayName: Deploy database schema changes to Azure
-    pool:
-    #  vmImage: 'windows-latest'
-      name: Personal
-    environment: sql-dev
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - download: current
-            artifact: database
-            patterns: '**/AdventureWorks.*'
-          - task: SqlAzureDacpacDeployment@1
-            inputs:
-              azureSubscription: 'Assaf''s Microsoft Azure Internal Consumption(d98ee679-4c4d-4a03-9181-ea7a16d0b5a8)'
-              AuthenticationType: 'server'
-              ServerName: 'devopsdemos.database.windows.net'
-              DatabaseName: 'AW2016demo'
-              SqlUsername: '$(SQL_USER)'
-              SqlPassword: '$(SQL_PASSWORD)'
-              deployType: 'DacpacTask'
-              DeploymentAction: 'Publish'
-              DacpacFile: '$(Pipeline.Workspace)/database/AdventureWorks.dacpac'
-              PublishProfile: '$(Pipeline.Workspace)/database/AdventureWorks.dev.publish.xml'
-              IpDetectionMethod: 'AutoDetect'
-          
