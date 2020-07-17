@@ -46,8 +46,8 @@ stages:
         SqlPassword: '$(SQL_PASSWORD)'
         deployType: 'DacpacTask'
         DeploymentAction: 'Script'
-        DacpacFile: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dacpac'
-        PublishProfile: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dev.publish.xml'
+        DacpacFile: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dacpac'
+        PublishProfile: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dev.publish.xml'
         IpDetectionMethod: 'AutoDetect'
     - task: PowerShell@2
       displayName: 'Display the schema migration script(s) for diagnostics'
@@ -63,7 +63,7 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy dacpac files'
       inputs:
-        SourceFolder: '$(Build.SourcesDirectory)/AdventureWorks/bin/$(buildConfiguration)'
+        SourceFolder: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)'
         Contents: |
           **/*.dacpac
           **/*.publish.xml
