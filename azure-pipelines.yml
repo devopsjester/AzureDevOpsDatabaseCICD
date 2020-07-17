@@ -59,11 +59,14 @@ stages:
             Write-Host "*** File: $($_.FullName) ***"
             Get-Content -Path $_
           }
-    - task: Pester@10
+    
+    - task: Pester@8
       inputs:
         scriptFolder: '$(Build.SourcesDirectory)/TrustButVerify/Test-SqlScripts.ps1'
         resultsFile: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/Test-Pester.XML'
-        usePSCore: False
+        additionalModulePath: '$(Build.SourcesDirectory)/TrustButVerify/Modules/SqlScriptParser'
+        run32Bit: False
+        
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'NUnit'
