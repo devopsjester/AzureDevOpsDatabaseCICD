@@ -24,11 +24,13 @@ stages:
       vmImage: 'windows-latest'
     steps:
     - task: VSBuild@1
+      displayName: Compile the dacpac with the publish-profile
       inputs:
         solution: '$(solution)'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
     - task: SqlAzureDacpacDeployment@1
+      displayName: Create a SQL diff script
       inputs:
         azureSubscription: 'Assaf''s Microsoft Azure Internal Consumption(d98ee679-4c4d-4a03-9181-ea7a16d0b5a8)'
         AuthenticationType: 'server'
