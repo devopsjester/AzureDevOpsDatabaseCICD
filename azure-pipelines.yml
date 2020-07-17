@@ -59,7 +59,16 @@ stages:
             Write-Host "*** File: $($_.FullName) ***"
             Get-Content -Path $_
           }
-
+    - task: Pester@10
+      inputs:
+        scriptFolder: '$(Build.SourcesDirectory)/TrustButVerify/Test-SqlScripts.ps1'
+        resultsFile: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/Test-Pester.XML'
+        usePSCore: False
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'NUnit'
+        testResultsFiles: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/Test-Pester.XML'
+        testRunTitle: 'Trust But Verify'
     - task: CopyFiles@2
       displayName: 'Copy dacpac files'
       inputs:
