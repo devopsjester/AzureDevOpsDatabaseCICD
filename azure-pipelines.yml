@@ -20,7 +20,7 @@ stages:
     solution: '**/*.sln'
     buildPlatform: 'Any CPU'
     buildConfiguration: 'Release'
-    PathToScriptDomLibrary: '$(Build.SourcesDirectory)/Tools/Microsoft.SqlServer.TransactSql.ScriptDom.dll'
+    PathToScriptDomLibrary: '$(Build.SourcesDirectory)/TrustButVerify/Microsoft.SqlServer.TransactSql.ScriptDom.dll'
     PathToSql: '$(Build.SourcesDirectory)/GeneratedOutputFiles/AW2016demo_Script.sql'
   jobs:
   - job: BuildSqlSolution
