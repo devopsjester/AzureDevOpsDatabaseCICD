@@ -20,6 +20,8 @@ stages:
     solution: '**/*.sln'
     buildPlatform: 'Any CPU'
     buildConfiguration: 'Release'
+    PathToScriptDomLibrary: '$(Build.SourcesDirectory)/Tools/Microsoft.SqlServer.TransactSql.ScriptDom.dll'
+    PathToSql: '$(Build.SourcesDirectory)/GeneratedOutputFiles/AW2016_Script.sql'
   jobs:
   - job: BuildSqlSolution
     displayName: Build the database schema's dacpac
