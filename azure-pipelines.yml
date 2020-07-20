@@ -67,7 +67,7 @@ stages:
           }
     - task: Pester@10
       inputs:
-        scriptFolder: '$(Build.SourcesDirectory)/TrustButVerify/Test-SQLScripts.ps1'
+        scriptFolder: '$(Build.SourcesDirectory)/TrustButVerify/SQLScriptVerification.Tests.ps1'
         resultsFile: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/Test-Pester.XML'
         usePSCore: False
         run32Bit: false
