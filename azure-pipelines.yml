@@ -66,17 +66,22 @@ stages:
             Get-Content -Path $_
           }
     - task: Pester@10
+      displayName: Run Trust-but-verify SQL migration validation tests
+      continueOnError: true
       inputs:
         scriptFolder: '$(Build.SourcesDirectory)/TrustButVerify/SQLScriptVerification.Tests.ps1'
         resultsFile: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/Test-Pester.XML'
         usePSCore: False
         run32Bit: false
-        
     - task: PublishTestResults@2
+      condition: succeededOrFailed()
       inputs:
         testResultsFormat: 'NUnit'
         testResultsFiles: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/Test-Pester.XML'
+        mergeTestResults: true
         testRunTitle: 'Trust But Verify'
+        buildPlatform: '$(buildPlatform)'
+        buildConfiguration: '$(buildConfiguration)'
     - task: CopyFiles@2
       displayName: 'Copy dacpac files'
       inputs:
