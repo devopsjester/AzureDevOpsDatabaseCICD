@@ -31,6 +31,7 @@ stages:
     steps:
     - checkout: self
     - checkout: tbf
+      condition: eq(variables['TrustButVerify'], 'true')
     - task: NuGetToolInstaller@1
     - task: NuGetCommand@2
       inputs:
@@ -67,6 +68,7 @@ stages:
           }
     - task: Pester@10
       displayName: Run Trust-but-verify SQL migration validation tests
+      condition: eq(variables['TrustButVerify'], 'true')
       continueOnError: true
       inputs:
         scriptFolder: '$(Build.SourcesDirectory)/TrustButVerify/SQLScriptVerification.Tests.ps1'
@@ -74,7 +76,7 @@ stages:
         usePSCore: False
         run32Bit: false
     - task: PublishTestResults@2
-      condition: succeededOrFailed()
+      condition: and(eq(variables['TrustButVerify'], 'true'), succeededOrFailed())
       inputs:
         testResultsFormat: 'NUnit'
         testResultsFiles: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/Test-Pester.XML'
