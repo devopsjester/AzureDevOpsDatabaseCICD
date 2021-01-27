@@ -114,8 +114,7 @@ stages:
   - deployment: DeployDatabase
     displayName: Deploy database schema changes to Azure
     pool:
-    #  vmImage: 'windows-latest'
-      name: Personal
+      vmImage: 'windows-latest'
     environment: sql-dev
     strategy:
       runOnce:
