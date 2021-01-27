@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Foo]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
-    [Name] NVARCHAR(50) NULL DEFAULT Joe
+    [Name] NVARCHAR(50) NULL DEFAULT 'Joe'
 )
