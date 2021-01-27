@@ -13,6 +13,9 @@ resources:
       name: devopsjester/TrustButVerify
       endpoint: github.com_devopsjester
 
+variables:
+- group: AWconnection
+
 stages:
 - stage: Builds
   displayName: Build the artifacts to be deployed
@@ -49,8 +52,8 @@ stages:
         AuthenticationType: 'server'
         ServerName: 'devopsdemos.database.windows.net'
         DatabaseName: 'AW2016demo'
-        SqlUsername: '$(SQL_USER)'
-        SqlPassword: '$(SQL_PASSWORD)'
+        SqlUsername: '$(sqlUser)'
+        SqlPassword: '$(sqlPassword)'
         deployType: 'DacpacTask'
         DeploymentAction: 'Script'
         DacpacFile: '$(Build.SourcesDirectory)/DatabaseDevops/AdventureWorks/bin/$(buildConfiguration)/AdventureWorks.dacpac'
@@ -129,8 +132,8 @@ stages:
               AuthenticationType: 'server'
               ServerName: 'devopsdemos.database.windows.net'
               DatabaseName: 'AW2016demo'
-              SqlUsername: '$(SQL_USER)'
-              SqlPassword: '$(SQL_PASSWORD)'
+              SqlUsername: '$(sqlUser)'
+              SqlPassword: '$(sqlPassword)'
               deployType: 'DacpacTask'
               DeploymentAction: 'Publish'
               DacpacFile: '$(Pipeline.Workspace)/database/AdventureWorks.dacpac'
