@@ -17,7 +17,6 @@
     [rowguid]                UNIQUEIDENTIFIER CONSTRAINT [DF_Product_rowguid] DEFAULT (newid()) NOT NULL,
     [ModifiedDate]           DATETIME         CONSTRAINT [DF_Product_ModifiedDate] DEFAULT (getdate()) NOT NULL,
     [AverageReviewScore] DECIMAL(1, 1) NULL, 
-    [ShortDescription] NVARCHAR(500) NULL, 
     CONSTRAINT [PK_Product_ProductID] PRIMARY KEY CLUSTERED ([ProductID] ASC),
     CONSTRAINT [CK_Product_ListPrice] CHECK ([ListPrice]>=(0.00)),
     CONSTRAINT [CK_Product_SellEndDate] CHECK ([SellEndDate]>=[SellStartDate] OR [SellEndDate] IS NULL),
