@@ -29,7 +29,7 @@ stages:
   - job: BuildSqlSolution
     displayName: Build the database schema's dacpac
     pool: 
-      vmImage: 'windows-latest'
+      vmImage: 'windows-2019'
     #  name: Personal
     steps:
     - checkout: self
