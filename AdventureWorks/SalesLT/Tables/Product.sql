@@ -5,7 +5,7 @@
     [Color]                  NVARCHAR (15)    NULL,
     [StandardCost]           MONEY            NOT NULL,
     [ListPrice]              MONEY            NOT NULL,
-    [Size]                   NVARCHAR (10)     NULL,
+    [Size]                   NVARCHAR (15)     NULL,
     [Weight]                 DECIMAL (8, 2)   NULL,
     [ProductCategoryID]      INT              NULL,
     [ProductModelID]         INT              NULL,
